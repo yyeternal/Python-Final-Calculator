@@ -1,0 +1,83 @@
+def calculateFinalGrade():
+    print("Welcome User!")
+    print("This is a WPI final calculator; it can calculate your final grade for any specified class!")
+    rawAverage = 0 
+    totalPercentMakeup = 0 
+    neededFinalGrade = 0 
+    knowsAverage = 0 
+    # checking if the user already knows their current average 
+    knowCurrentAverage = input("Do you know your current average for the class? ")
+    if knowCurrentAverage.upper() == "YES" or knowCurrentAverage.upper() == "YEA" or knowCurrentAverage.upper() == "Y":
+        averageGrade = int(input("Enter your current average: "))
+        percentOfFinal = int(input("What percent does your final make up: "))
+        # checking what their average is if they do not take the final 
+        rawAverage = averageGrade * ((100 - percentOfFinal) / 100)
+        # basically a boolean to see later if the user knew their average or not 
+        knowsAverage = 1 
+    else:
+        # asking the user for how many different sections make up their grades 
+        numDifferentCategories = int(input("Enter how many different categories not including your final break up your grade: "))
+        # input validation 
+        while type(numDifferentCategories) != int:
+            print("This answer has to be an integer!")
+            numDifferentCategories = int(input("Enter how many different categories break up your grade: "))
+            # looping through each section 
+        for i in range(numDifferentCategories):
+            total = 0 
+            categoryName = input("Enter what category you wish to enter now: ")
+            percentMakeUp = int(input("Enter what percent "+ categoryName+" makes up for your grade. Ex: 23 not 23%: "))
+            totalPercentMakeup += percentMakeUp
+            # checking the user entered the percentages correctly for each section 
+            if totalPercentMakeup > 100:
+                print("You did not correctly input the percents, rerun the program and retry :)")
+            # input validation 
+            while percentMakeUp > 100 or percentMakeUp < 0 or type(percentMakeUp) != int:
+                print("This must be a number between 0 and 100!")
+                percentMakeUp = int(input("Enter what percent " + categoryName + " makes up for your grade. Ex: 23 not 23%: "))
+            numGradesForCategory = int(input("Enter how many grades you have for " + categoryName + ": "))
+            # input validation 
+            while numGradesForCategory < 0 or type(numGradesForCategory) != int:
+                print("This must be a positive integer!")
+                numGradesForCategory = int(input("Enter how many grades you have for " + categoryName + ": "))
+            # user entering each of their grades and adding it to an accumulator 
+            for j in range(numGradesForCategory): 
+                grade = int(input("Enter your grade here: "))
+                while type(grade) != int:
+                    print("Your grade must be an integer!")
+                    grade = int(input("Enter your grade here: "))
+                total += grade
+            # computing the average if the user never took the final 
+            rawAverage += int((total / numGradesForCategory) * percentMakeUp)
+        # the user's current average 
+        averageGrade = int(rawAverage / totalPercentMakeup)
+    # checking what letter grade the user currently has 
+    if averageGrade > 89.9:
+        letterGrade = "A"
+    elif averageGrade > 79.9 and averageGrade < 89.9:
+        letterGrade = "B"
+    elif averageGrade > 69.9 and averageGrade < 79.9:
+        letterGrade = "C"
+    else:
+        letterGrade = "NR"
+    print("Your current average is a " + str(averageGrade) + " without the final and your letter grade is a " + letterGrade)
+    # asking the user for what they want their final grade to be 
+    wantedGrade = int(input("What integer average do you want to finish the course with? "))
+    # input validation 
+    while wantedGrade < 0 or type(wantedGrade) != int:
+            print("This must be a positive integer!")
+            wantedGrade = int(input("What integer average do you want to finish the course with? "))
+    # checking to see if the user already knew their average 
+    if knowsAverage != 1:
+        percentOfFinal = int(input("What percent does your final makeup? "))
+        # input validation 
+        while percentOfFinal < 0 or percentOfFinal > 100 or (percentOfFinal + totalPercentMakeup) > 100 or type(percentOfFinal) != int:
+            print("This number must be a positive integer no greater than 100")
+            percentOfFinal = int(input("What percent does your final makeup? "))
+    # calculating what the user needs on the final to get their desired grade 
+    neededFinalGrade = round((abs(wantedGrade - rawAverage)) / percentOfFinal * 100, 2)
+    if neededFinalGrade > 100:
+        print("You would need a " + str(neededFinalGrade) + " on your final to get a " + str(wantedGrade) + " in this class. That's not happening :(")
+    else:
+        print("You would need a " + str(neededFinalGrade) + " on your final to get a " + str(wantedGrade) + " in this class.")
+    
+calculateFinalGrade()
