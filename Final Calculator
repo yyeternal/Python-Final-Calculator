@@ -47,7 +47,7 @@ def calculateFinalGrade():
                     grade = int(input("Enter your grade here: "))
                 total += grade
             # computing the average if the user never took the final 
-            rawAverage += int((total / numGradesForCategory) * percentMakeUp)
+            rawAverage += int((total / numGradesForCategory) * (percentMakeUp / 100))
         # the user's current average 
         averageGrade = int(rawAverage / totalPercentMakeup)
     # checking what letter grade the user currently has 
