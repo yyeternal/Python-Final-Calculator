@@ -49,7 +49,7 @@ def calculateFinalGrade():
             # computing the average if the user never took the final 
             rawAverage += int((total / numGradesForCategory) * (percentMakeUp / 100))
         # the user's current average 
-        averageGrade = int(rawAverage / totalPercentMakeup)
+        averageGrade = int(rawAverage / totalPercentMakeup * 100)
     # checking what letter grade the user currently has 
     if averageGrade > 89.9:
         letterGrade = "A"
